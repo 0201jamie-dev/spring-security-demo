@@ -1,7 +1,8 @@
 package com.babiel.springsecurity;
 
+import com.babiel.springsecurity.enums.UserStatus;
 import com.babiel.springsecurity.model.UserEntity;
-import com.babiel.springsecurity.roles.Role;
+import com.babiel.springsecurity.enums.Role;
 import com.babiel.springsecurity.service.UserService;
 import jakarta.annotation.PostConstruct;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -33,6 +34,7 @@ public class ExampleData {
         user1.setPassword(encoder.encode("1234"));
         user1.setUsername("user1");
         user1.setRoles(userRoles);
+        user1.setUserStatus(UserStatus.BLOCKED);
 
         userService.createUser(user1);
 
@@ -46,6 +48,7 @@ public class ExampleData {
         admin.setPassword(encoder.encode("1234"));
         admin.setUsername("admin");
         admin.setRoles(adminRoles);
+        admin.setUserStatus(UserStatus.ACTIVE);
 
         userService.createUser(admin);
 
@@ -60,6 +63,7 @@ public class ExampleData {
         adminuser.setPassword(encoder.encode("1234"));
         adminuser.setUsername("adminuser");
         adminuser.setRoles(adminUserRoles);
+        adminuser.setUserStatus(UserStatus.APPROVAL_PENDING);
 
         userService.createUser(adminuser);
     }

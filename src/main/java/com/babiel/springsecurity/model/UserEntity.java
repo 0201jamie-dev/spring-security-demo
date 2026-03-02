@@ -1,6 +1,7 @@
 package com.babiel.springsecurity.model;
 
-import com.babiel.springsecurity.roles.Role;
+import com.babiel.springsecurity.enums.Role;
+import com.babiel.springsecurity.enums.UserStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
@@ -59,11 +60,14 @@ public class UserEntity extends AbstractEntity {
     @ElementCollection(fetch = FetchType.EAGER)
     private List<Role> roles;
 
-    public UserEntity(String username, String emailAddress, String realname, String password, List<Role> roles) {
+    private UserStatus userStatus;
+
+    public UserEntity(String username, String emailAddress, String realname, String password, List<Role> roles, UserStatus userStatus) {
         this.username = username;
         this.emailAddress = emailAddress;
         this.realname = realname;
         this.password = password;
         this.roles = roles;
+        this.userStatus = userStatus;
     }
 }

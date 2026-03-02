@@ -1,5 +1,6 @@
 package com.babiel.springsecurity.model;
 
+import com.babiel.springsecurity.enums.UserStatus;
 import org.jspecify.annotations.Nullable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -41,6 +42,9 @@ public class SecurityUser implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
+        if (user.getUserStatus() == UserStatus.APPROVAL_PENDING) {
+            return false;
+        }
         return true;
     }
 
@@ -51,6 +55,9 @@ public class SecurityUser implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        if (user.getUserStatus() == UserStatus.ACTIVE) {
+            return true;
+        }
+        return false;
     }
 }

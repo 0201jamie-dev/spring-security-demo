@@ -31,7 +31,12 @@ public class SecurityConfig {
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .userDetailsService(userDetailsService)
-                .formLogin(Customizer.withDefaults())
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .permitAll()
+                        .defaultSuccessUrl("/")
+                        .failureUrl("/login?error=true")
+                )
                 .build();
     }
 
