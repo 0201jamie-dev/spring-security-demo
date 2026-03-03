@@ -26,7 +26,7 @@ public class ExampleData {
 
         // create user
         List<Role> userRoles = new ArrayList<>();
-        userRoles.add(Role.ROLE_USER);
+        userRoles.add(Role.USER);
 
         UserEntity user1 = new UserEntity();
         user1.setEmailAddress("user1@gmx.de");
@@ -40,7 +40,7 @@ public class ExampleData {
 
         // create admin
         List<Role> adminRoles = new ArrayList<>();
-        adminRoles.add(Role.ROLE_ADMIN);
+        adminRoles.add(Role.ADMIN);
 
         UserEntity admin = new UserEntity();
         admin.setEmailAddress("admin@gmx.de");
@@ -54,8 +54,8 @@ public class ExampleData {
 
         // create admin user
         List<Role> adminUserRoles = new ArrayList<>();
-        adminUserRoles.add(Role.ROLE_USER);
-        adminUserRoles.add(Role.ROLE_ADMIN);
+        adminUserRoles.add(Role.USER);
+        adminUserRoles.add(Role.ADMIN);
 
         UserEntity adminuser = new UserEntity();
         adminuser.setEmailAddress("adminuser@gmx.de");

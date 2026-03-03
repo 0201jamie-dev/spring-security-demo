@@ -16,13 +16,13 @@ public class SiteController {
         return "index";
     }
 
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/user/index")
     public String displayUser() {
         return "user";
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/admin/index")
     public String displayAdmin() {
         return "admin";

@@ -21,8 +21,11 @@
 
         <button class="btn btn-primary" type="submit">Login</button>
 
-        <c:if test="${param.error}">
-            <p class="text-danger">Cannot log in</p>
+        <c:if test="${not empty SPRING_SECURITY_LAST_EXCEPTION}">
+            <div class="text-danger">
+                ${SPRING_SECURITY_LAST_EXCEPTION.message}
+            </div>
+            <c:remove var="{SPRING_SECURITY_LAST_EXCEPTION}" scope="session"></c:remove>
         </c:if>
 </form>
 </body>

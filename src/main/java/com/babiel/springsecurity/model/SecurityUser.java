@@ -6,9 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 
 public class SecurityUser implements UserDetails {
 
@@ -42,10 +40,7 @@ public class SecurityUser implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        if (user.getUserStatus() == UserStatus.APPROVAL_PENDING) {
-            return false;
-        }
-        return true;
+        return user.getUserStatus() != UserStatus.APPROVAL_PENDING;
     }
 
     @Override
@@ -55,9 +50,6 @@ public class SecurityUser implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        if (user.getUserStatus() == UserStatus.ACTIVE) {
-            return true;
-        }
-        return false;
+        return user.getUserStatus() == UserStatus.ACTIVE;
     }
 }

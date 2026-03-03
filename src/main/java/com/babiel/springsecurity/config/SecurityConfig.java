@@ -1,9 +1,12 @@
 package com.babiel.springsecurity.config;
 
 import com.babiel.springsecurity.service.UserDetailsService;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
+import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -27,8 +30,8 @@ public class SecurityConfig {
         return http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/**").permitAll()
-                        .requestMatchers("/user/**").hasRole("USER")
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/user/**").hasAuthority("USER")
+                        .requestMatchers("/admin/**").hasAuthority("ADMIN")
                         .anyRequest().authenticated())
                 .userDetailsService(userDetailsService)
                 .formLogin(form -> form
@@ -36,7 +39,9 @@ public class SecurityConfig {
                         .permitAll()
                         .defaultSuccessUrl("/")
                         .failureUrl("/login?error=true")
+                        .permitAll()
                 )
+                .authenticationProvider(authProvider())
                 .build();
     }
 
@@ -44,4 +49,21 @@ public class SecurityConfig {
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+    @Bean
+    MessageSource messageSource() {
+        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+        messageSource.setBasenames("messages", "org.springframework.security.messages");
+        messageSource.setDefaultEncoding("UTF-8");
+        return messageSource;
+    }
+
+    @Bean
+    DaoAuthenticationProvider authProvider() {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider(userDetailsService);
+        provider.setMessageSource(messageSource());
+        provider.setPasswordEncoder(passwordEncoder());
+        return provider;
+    }
+
 }

@@ -58,6 +58,7 @@ public class UserEntity extends AbstractEntity {
     @NotNull
     @NotEmpty
     @ElementCollection(fetch = FetchType.EAGER)
+    @Enumerated(EnumType.STRING)
     private List<Role> roles;
 
     private UserStatus userStatus;
