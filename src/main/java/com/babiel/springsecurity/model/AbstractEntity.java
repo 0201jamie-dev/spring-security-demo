@@ -7,6 +7,10 @@ import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * @author Jamie Augustin
+ * @version 1.0
+ */
 @MappedSuperclass
 @Getter @Setter
 public abstract class AbstractEntity {

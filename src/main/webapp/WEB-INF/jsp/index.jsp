@@ -7,6 +7,7 @@
 </head>
 <body>
 <a class="btn btn-dark" href="login">Login</a>
+<a class="btn btn-dark" href="registration">Registration</a>
 <a class="btn btn-dark" href="user/index">User</a>
 <a class="btn btn-dark" href="admin/index">Admin</a>
 </body>

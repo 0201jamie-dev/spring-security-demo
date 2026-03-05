@@ -38,6 +38,9 @@ public class SecurityUser implements UserDetails {
         return true;
     }
 
+    /**
+     * @return the boolean shows whether the account is locked (false) or not (true)
+     */
     @Override
     public boolean isAccountNonLocked() {
         return user.getUserStatus() != UserStatus.APPROVAL_PENDING;

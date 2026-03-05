@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import jakarta.validation.constraints.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -59,9 +60,9 @@ public class UserEntity extends AbstractEntity {
     @NotEmpty
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
-    private List<Role> roles;
+    private List<Role> roles = new ArrayList<>(List.of(Role.USER));
 
-    private UserStatus userStatus;
+    private UserStatus userStatus = UserStatus.ACTIVE;
 
     public UserEntity(String username, String emailAddress, String realname, String password, List<Role> roles, UserStatus userStatus) {
         this.username = username;
