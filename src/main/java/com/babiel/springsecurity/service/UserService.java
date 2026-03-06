@@ -24,19 +24,9 @@ public interface UserService {
      */
     void deleteUser(UserEntity user);
 
-    /**
-     * checks if a user with the given username already exists in the database
-     *
-     * @param username username to compare with in the database
-     * @return boolean that indicates whether the given username already exists in the database or not
-     */
-    boolean existsUserByUsername(String username);
+    boolean existsUserByUsernameOrEmailAddress(String username, String emailAddress);
 
-    /**
-     * checks if a user with the given email address already exists in the database
-     *
-     * @param emailAddress email address to compare with in the database
-     * @return boolean that indicates whether the given email address already exists in the database or not
-     */
     boolean existsUserByEmailAddress(String emailAddress);
+
+    boolean existsUserByUsername(String username);
 }

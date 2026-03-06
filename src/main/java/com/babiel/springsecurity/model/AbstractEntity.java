@@ -9,7 +9,6 @@ import lombok.Setter;
 
 /**
  * @author Jamie Augustin
- * @version 1.0
  */
 @MappedSuperclass
 @Getter @Setter

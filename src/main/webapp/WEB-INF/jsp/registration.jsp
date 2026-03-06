@@ -32,7 +32,8 @@
 
             <tr>
                 <td><label for="emailAddressConfirmation">Email address confirmation</label></td>
-                <td><form:input type="text" id="emailAddressConfirmation" path="emailAddressConfirmation"/></td
+                <td><form:input type="text" id="emailAddressConfirmation" path="emailAddressConfirmation"/></td>
+                <td><c:out value="${emailAddressConstraint}" /></td>
             </tr>
 
             <tr>
@@ -44,6 +45,7 @@
             <tr>
                 <td><label for="passwordConfirmation">Password confirmation</label></td>
                 <td><form:input type="password" id="passwordConfirmation" path="passwordConfirmation" /></td>
+                <td><c:out value="${passwordConstraint}" /></td>
             </tr>
             <tr>
                 <td><button class="btn btn-primary" type="submit">register</button></td>

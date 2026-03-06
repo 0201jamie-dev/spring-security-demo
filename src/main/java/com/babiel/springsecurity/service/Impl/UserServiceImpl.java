@@ -15,12 +15,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void createUser(UserEntity user) {
-        userRepository.saveAndFlush(user);
+        userRepository.save(user);
     }
 
     @Override
     public void updateUser(UserEntity user) {
-        userRepository.saveAndFlush(user);
+        userRepository.save(user);
     }
 
     @Override
@@ -29,12 +29,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean existsUserByUsername(String username) {
-        return userRepository.findByUsername(username).isPresent();
+    public boolean existsUserByUsernameOrEmailAddress(String username, String emailAddress) {
+        return userRepository.findByUsernameOrEmailAddress(username, emailAddress).isPresent();
     }
-
     @Override
     public boolean existsUserByEmailAddress(String emailAddress) {
         return userRepository.findByEmailAddress(emailAddress).isPresent();
+    }
+
+    @Override
+    public boolean existsUserByUsername(String username) {
+        return userRepository.findByUsername(username).isPresent();
     }
 }

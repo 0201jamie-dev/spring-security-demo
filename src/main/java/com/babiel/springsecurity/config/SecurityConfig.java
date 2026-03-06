@@ -1,6 +1,6 @@
 package com.babiel.springsecurity.config;
 
-import com.babiel.springsecurity.service.UserDetailsService;
+import com.babiel.springsecurity.service.CustomUserDetailsService;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,10 +18,10 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableMethodSecurity
 public class SecurityConfig {
 
-    private final UserDetailsService userDetailsService;
+    private final CustomUserDetailsService customUserDetailsService;
 
-    public SecurityConfig(UserDetailsService userDetailsService) {
-        this.userDetailsService = userDetailsService;
+    public SecurityConfig(CustomUserDetailsService customUserDetailsService) {
+        this.customUserDetailsService = customUserDetailsService;
     }
 
     @Bean
@@ -32,7 +32,7 @@ public class SecurityConfig {
                         .requestMatchers("/user/**").hasAuthority("USER")
                         .requestMatchers("/admin/**").hasAuthority("ADMIN")
                         .anyRequest().authenticated())
-                .userDetailsService(userDetailsService)
+                .userDetailsService(customUserDetailsService)
                 .formLogin(form -> form
                         .loginPage("/login")
                         .permitAll()
@@ -59,7 +59,7 @@ public class SecurityConfig {
 
     @Bean
     DaoAuthenticationProvider authProvider() {
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider(userDetailsService);
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider(customUserDetailsService);
         provider.setMessageSource(messageSource());
         provider.setPasswordEncoder(passwordEncoder());
         return provider;

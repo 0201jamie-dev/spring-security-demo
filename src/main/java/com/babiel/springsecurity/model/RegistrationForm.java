@@ -16,6 +16,7 @@ import lombok.*;
  * @author Jamie Augustin
  */
 @Getter @Setter
+@NoArgsConstructor
 @AllArgsConstructor
 @EmailAddressMatchConstraint(field1 = "emailAddress", field2 = "emailAddressConfirmation")
 @PasswordMatchConstraint(field1 = "password", field2 = "passwordConfirmation")
@@ -39,4 +40,6 @@ public class RegistrationForm {
     private String password;
 
     private String passwordConfirmation;
+
+    private String errorMessage = null;
 }
