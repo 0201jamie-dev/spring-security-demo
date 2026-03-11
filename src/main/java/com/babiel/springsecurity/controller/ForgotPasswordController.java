@@ -1,0 +1,54 @@
+package com.babiel.springsecurity.controller;
+
+import com.babiel.springsecurity.model.ForgotPasswordForm;
+import com.babiel.springsecurity.service.EmailService;
+import com.babiel.springsecurity.service.Impl.EmailServiceImpl;
+import com.babiel.springsecurity.service.JWTService;
+import com.babiel.springsecurity.service.UserService;
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import java.security.Principal;
+
+@Controller
+public class ForgotPasswordController {
+
+    private final UserService userService;
+    private final JWTService jwtService;
+    private final EmailService emailService;
+
+    public ForgotPasswordController(UserService userService, JWTService jwtService, EmailService emailService) {
+        this.userService = userService;
+        this.jwtService = jwtService;
+        this.emailService = emailService;
+    }
+
+    @GetMapping("forgotPassword")
+    public String displayForgotPassword(@ModelAttribute ForgotPasswordForm forgotPasswordForm) {
+        return "forgotPassword";
+    }
+
+    @PostMapping("forgotPassword")
+    public String sendEmail(@Valid @ModelAttribute("forgotPasswordForm") ForgotPasswordForm forgotPasswordForm,
+                            BindingResult bindingResult, Model model) {
+
+        if (bindingResult.hasErrors()) {
+            return "forgotPassword";
+        }
+
+        model.addAttribute("emailSent", true);
+
+        if (userService.existsUserByEmailAddress(forgotPasswordForm.emailAddress())) {
+            String jwtToken = jwtService.generateToken(forgotPasswordForm.emailAddress());
+            emailService.sendEmail(forgotPasswordForm.emailAddress(), "Password Reset", "http://localhost:8080/resetPassword?jwt=" + jwtToken);
+        }
+
+        return "forgotPassword";
+    }
+}

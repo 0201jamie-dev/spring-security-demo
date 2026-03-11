@@ -63,7 +63,7 @@ public class ExampleData {
         adminuser.setPassword(encoder.encode("1234"));
         adminuser.setUsername("adminuser");
         adminuser.setRoles(adminUserRoles);
-        adminuser.setUserStatus(UserStatus.APPROVAL_PENDING);
+        adminuser.setUserStatus(UserStatus.ACTIVE);
 
         userService.createUser(adminuser);
     }

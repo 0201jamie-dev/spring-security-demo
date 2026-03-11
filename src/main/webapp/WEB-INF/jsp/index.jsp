@@ -10,5 +10,6 @@
 <a class="btn btn-dark" href="registration">Registration</a>
 <a class="btn btn-dark" href="user/index">User</a>
 <a class="btn btn-dark" href="admin/index">Admin</a>
+<a class="btn btn-danger" href="logout">Logout</a>
 </body>
 </html>

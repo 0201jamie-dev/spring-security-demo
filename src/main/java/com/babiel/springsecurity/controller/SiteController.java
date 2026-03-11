@@ -11,6 +11,11 @@ public class SiteController {
         return "login";
     }
 
+    @GetMapping("/logout")
+    public String logout() {
+        return "logout";
+    }
+
     @GetMapping("")
     public String displayIndex() {
         return "index";
@@ -27,4 +32,5 @@ public class SiteController {
     public String displayAdmin() {
         return "admin";
     }
+
 }

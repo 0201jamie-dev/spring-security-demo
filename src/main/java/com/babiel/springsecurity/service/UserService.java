@@ -29,4 +29,7 @@ public interface UserService {
     boolean existsUserByEmailAddress(String emailAddress);
 
     boolean existsUserByUsername(String username);
+
+    UserEntity getUserByEmailAddress(String emailAddress);
+
 }

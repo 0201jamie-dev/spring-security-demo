@@ -28,5 +28,6 @@
             <c:remove var="{SPRING_SECURITY_LAST_EXCEPTION}" scope="session"></c:remove>
         </c:if>
 </form>
+<a href="forgotPassword">Passwort vergessen</a>
 </body>
 </html>
