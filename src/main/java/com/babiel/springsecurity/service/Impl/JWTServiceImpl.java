@@ -52,7 +52,9 @@ public class JWTServiceImpl implements JWTService {
         String subject = getSubject(token);
         boolean isTokenExpired = claims.getExpiration().before(new Date());
 
-        return subject != null && userService.existsUserByEmailAddress(subject) && !isTokenExpired;
+        if (isTokenExpired) return false;
+        if (subject == null) return false;
+        return userService.existsUserByEmailAddress(subject);
     }
 
     public Claims getClaims(String token) {
@@ -71,5 +73,11 @@ public class JWTServiceImpl implements JWTService {
         Claims claims = getClaims(token);
         if (claims == null) {return null;}
         return claims.getSubject();
+    }
+
+    public Date getExpiryDate(String token) {
+        Claims claims = getClaims(token);
+
+        return claims.getExpiration();
     }
 }

@@ -5,6 +5,7 @@ import com.babiel.springsecurity.service.EmailService;
 import com.babiel.springsecurity.service.Impl.EmailServiceImpl;
 import com.babiel.springsecurity.service.JWTService;
 import com.babiel.springsecurity.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.security.Principal;
 
@@ -36,7 +38,7 @@ public class ForgotPasswordController {
 
     @PostMapping("forgotPassword")
     public String sendEmail(@Valid @ModelAttribute("forgotPasswordForm") ForgotPasswordForm forgotPasswordForm,
-                            BindingResult bindingResult, Model model) {
+                            BindingResult bindingResult, Model model, HttpServletRequest request) {
 
         if (bindingResult.hasErrors()) {
             return "forgotPassword";
@@ -44,10 +46,20 @@ public class ForgotPasswordController {
 
         model.addAttribute("emailSent", true);
 
-        if (userService.existsUserByEmailAddress(forgotPasswordForm.emailAddress())) {
-            String jwtToken = jwtService.generateToken(forgotPasswordForm.emailAddress());
-            emailService.sendEmail(forgotPasswordForm.emailAddress(), "Password Reset", "http://localhost:8080/resetPassword?jwt=" + jwtToken);
-        }
+        String baseUrl = ServletUriComponentsBuilder
+                .fromRequestUri(request)
+                .replacePath(null)
+                .build()
+                .toUriString();
+
+        new Thread(() -> {
+            try {
+                if (userService.existsUserByEmailAddress(forgotPasswordForm.emailAddress())) {
+                    String jwtToken = jwtService.generateToken(forgotPasswordForm.emailAddress());
+                    emailService.sendEmail(forgotPasswordForm.emailAddress(), "Password Reset", baseUrl + "/resetPassword?jwt=" + jwtToken);
+                }
+            } catch (Exception e) {}
+        }).start();
 
         return "forgotPassword";
     }
