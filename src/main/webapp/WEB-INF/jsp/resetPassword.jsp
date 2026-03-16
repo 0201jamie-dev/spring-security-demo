@@ -8,11 +8,16 @@
 <html lang="de">
 <head>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script>
+        function onSubmit(token) {
+            document.getElementById("reset-password-form").submit();
+        }
+    </script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 </head>
 <body>
 <h1>Reset your password</h1>
-    <form:form method="post" modelAttribute="resetPasswordForm">
+    <form:form id="reset-password-form" method="post" modelAttribute="resetPasswordForm">
         <form:input type="hidden" value="${jwt}" path="token" />
         <table>
             <tr>
@@ -53,14 +58,12 @@
                 </c:if>
             </tr>
 
-            <tr>
-                <spring:eval expression="@environment.getProperty('google.recaptcha.site')" var="recaptchaSite" />
-                <div class="g-recaptcha" data-sitekey="${recaptchaSite}"></div>
-            <tr>
 
             <tr>
                 <c:if test="${isValid}">
-                    <td><button class="btn btn-primary" type="submit">Reset</button></td>
+                    <spring:eval expression="@environment.getProperty('google.recaptcha.site')" var="recaptchaSite" />
+                    <td><button type="submit" class="g-recaptcha btn btn-primary" data-sitekey="${recaptchaSite}"
+                                data-callback="onSubmit" data-action="submit">Submit</button></td>
                 </c:if>
                 <c:if test="${!isValid}">
                     <td><button class="btn btn-primary" disabled>Reset</button></td>

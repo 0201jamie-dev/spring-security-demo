@@ -11,7 +11,7 @@ public class BlacklistScheduling {
     public BlacklistScheduling(BlacklistService blacklistService) {
         this.blacklistService = blacklistService;
     }
-    @Scheduled(cron = "0 0 3 * * *", zone = "Europe/Paris")
+    @Scheduled(cron = "0 0 3 * * *")
     public void deleteAllBlacklistEntries() {
         blacklistService.deleteAllEntries();
     }

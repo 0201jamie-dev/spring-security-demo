@@ -32,4 +32,6 @@ public interface UserService {
 
     UserEntity getUserByEmailAddress(String emailAddress);
 
+    UserEntity getUserByUsername(String username);
+
 }

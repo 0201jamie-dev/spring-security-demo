@@ -12,6 +12,7 @@ import lombok.Setter;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -53,6 +54,8 @@ public class UserEntity extends AbstractEntity {
     @Size(min = 1)
     private String password;
 
+    private boolean passwordExpired = true;
+
     /**
      * A list of roles.
      */
@@ -64,11 +67,12 @@ public class UserEntity extends AbstractEntity {
 
     private UserStatus userStatus = UserStatus.ACTIVE;
 
-    public UserEntity(String username, String emailAddress, String realname, String password, List<Role> roles, UserStatus userStatus) {
+    public UserEntity(String username, String emailAddress, String realname, String password, boolean passwordExpired, List<Role> roles, UserStatus userStatus) {
         this.username = username;
         this.emailAddress = emailAddress;
         this.realname = realname;
         this.password = password;
+        this.passwordExpired = passwordExpired;
         this.roles = roles;
         this.userStatus = userStatus;
     }

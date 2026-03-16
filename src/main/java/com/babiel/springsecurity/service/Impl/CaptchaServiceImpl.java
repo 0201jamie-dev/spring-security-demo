@@ -1,6 +1,8 @@
 package com.babiel.springsecurity.service.Impl;
 
 import com.babiel.springsecurity.service.CaptchaService;
+import lombok.extern.slf4j.Slf4j;
+import org.hibernate.event.service.spi.EventListenerRegistry;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -11,9 +13,11 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.EventListener;
 import java.util.Map;
 
 @Service
+@Slf4j
 public class CaptchaServiceImpl implements CaptchaService {
     private final RestTemplate restTemplate;
     private final String verifyUrl = "https://www.google.com/recaptcha/api/siteverify";
@@ -42,9 +46,13 @@ public class CaptchaServiceImpl implements CaptchaService {
 
         if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
             Object success = response.getBody().get("success");
-            return Boolean.TRUE.equals(success);
+            if (Boolean.TRUE.equals(success)) {
+                Object captchaScore = response.getBody().get("score");
+                if (captchaScore == null) return false;
+                LOG.info("The recaptcha v3 score is: " + captchaScore);
+                return (Double) captchaScore > 0.5;
+            }
         }
-
         return false;
     }
 }

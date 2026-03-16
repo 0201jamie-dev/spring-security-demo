@@ -55,4 +55,8 @@ public class UserPrincipal implements UserDetails {
     public boolean isEnabled() {
         return user.getUserStatus() == UserStatus.ACTIVE;
     }
+
+    public boolean isPasswordExpired() {
+        return user.isPasswordExpired();
+    }
 }
