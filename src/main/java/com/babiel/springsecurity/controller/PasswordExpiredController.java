@@ -42,16 +42,18 @@ public class PasswordExpiredController {
     }
 
     @GetMapping("/passwordExpired")
-    public String displayResetPassword(Model model, @ModelAttribute ResetPasswordForm resetPasswordForm, HttpServletRequest request) throws UnsupportedEncodingException {
+    public String displayResetPassword(Model model, @ModelAttribute ResetPasswordForm resetPasswordForm,
+                                       HttpServletRequest request) throws UnsupportedEncodingException {
         model.addAttribute("isValid", true);
         return "passwordExpired";
     }
 
     @PostMapping("/passwordExpired")
     public String resetPassword(@Valid @ModelAttribute ResetPasswordForm resetPasswordForm,
-                                BindingResult result, Model model, HttpServletRequest request) throws UnsupportedEncodingException {
-        HttpSession session = request.getSession();
-        String currentUsername = session.getAttribute("username").toString();
+                                BindingResult result, Model model, HttpServletRequest request, Principal principal)
+            throws UnsupportedEncodingException {
+
+        String currentUsername = principal.getName();
 
         String response = request.getParameter("g-recaptcha-response");
         String clientIp = request.getHeader("X-FORWARDED-FOR");

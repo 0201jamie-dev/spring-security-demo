@@ -1,6 +1,6 @@
 package com.babiel.springsecurity.config;
 
-import com.babiel.springsecurity.interceptor.UserInterceptor;
+import com.babiel.springsecurity.interceptor.PasswordExpiredInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -10,6 +10,6 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new UserInterceptor()).excludePathPatterns("/resetPassword");
+        registry.addInterceptor(new PasswordExpiredInterceptor()).excludePathPatterns("/resetPassword");
     }
 }
